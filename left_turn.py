@@ -60,4 +60,61 @@ cost = [2, 1, 20]  # cost has 3 values, corresponding to making
 # ----------------------------------------
 
 def optimum_policy2D(grid, init, goal, cost):
+    value = [[[999 for row in range(len(grid[0]))] for col in range(len(grid))],
+             [[999 for row in range(len(grid[0]))] for col in range(len(grid))],
+             [[999 for row in range(len(grid[0]))] for col in range(len(grid))],
+             [[999 for row in range(len(grid[0]))] for col in range(len(grid))]]
+
+    policy = [[[' ' for row in range(len(grid[0]))] for col in range(len(grid))],
+              [[' ' for row in range(len(grid[0]))] for col in range(len(grid))],
+              [[' ' for row in range(len(grid[0]))] for col in range(len(grid))],
+              [[' ' for row in range(len(grid[0]))] for col in range(len(grid))]]
+
+    policy2D = [[' ' for row in range(len(grid[0]))] for col in range(len(grid))]
+
+    change = True
+    while change:
+        change = False
+        # go through all grid cells and calculate values
+        for x in range(len(grid)):
+            for y in range(len(grid[0])):
+                for orientation in range(4):
+                    if goal[0] == x and goal[1] == y:
+                        if value[orientation][x][y] > 0:
+                            change = True
+                            value[orientation][x][y] = 0
+                            policy[orientation][x][y] = '*'
+                    elif grid[x][y] == 0:
+
+                        # calculate the three ways to propagate value
+                        for i in range(3):
+                            o2 = (orientation + action[i]) % 4
+                            x2 = x + forward[o2][0]
+                            y2 = y + forward[o2][1]
+
+                            if x2 >= 0 and x2 < len(grid) and y2 >= 0 and y2 < len(grid[0]) and grid[x2][y2] == 0:
+                                v2 = value[o2][x2][y2] + cost[i]
+                                if v2 < value[orientation][x][y]:
+                                    value[orientation][x][y] = v2
+                                    policy[orientation][x][y] = action_name[i]
+                                    change = True
+    x = init[0]
+    y = init[1]
+    orientation = init[2]
+
+    policy2D[x][y] = policy[orientation][x][y]
+    while policy[orientation][x][y] != '*':
+        if policy[orientation][x][y] == '#':
+            o2 = orientation
+        elif policy[orientation][x][y] == 'R':
+            o2 = (orientation - 1) % 4
+        elif policy[orientation][x][y] == 'L':
+            o2 = (orientation + 1) % 4
+        x = x + forward[o2][0]
+        y = y + forward[o2][1]
+        orientation = o2
+        policy2D[x][y] = policy[orientation][x][y]
     return policy2D
+
+
+print(optimum_policy2D(grid, init, goal, cost))
