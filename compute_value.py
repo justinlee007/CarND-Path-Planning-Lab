@@ -38,6 +38,21 @@ def compute_value(grid, goal, cost):
                 if goal[0] == x and goal[1] == y:
                     if value[x][y] > 0:
                         value[x][y] = 0
-    # make sure your function returns a grid of values as
-    # demonstrated in the previous video.
+                        change = True
+
+                elif grid[x][y] == 0:
+                    for a in range(len(delta)):
+                        x2 = x + delta[a][0]
+                        y2 = y + delta[a][1]
+
+                        if x2 >= 0 and x2 < len(grid) and y2 >= 0 and y2 < len(grid[0]) and grid[x2][y2] == 0:
+
+                            v2 = value[x2][y2] + cost
+
+                            if v2 < value[x][y]:
+                                change = True
+                                value[x][y] = v2
+
     return value
+
+print(compute_value(grid, goal, cost))
