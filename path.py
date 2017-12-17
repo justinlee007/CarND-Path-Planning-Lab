@@ -47,21 +47,31 @@ def search(grid, init, goal, cost):
     count = 0
 
     while not found and not resign:
+
+        # check if we still have elements on the open list
         if len(open) == 0:
             resign = True
+            print('fail')
+            # print('###### Search terminated without success')
         else:
+            # remove node from list
             open.sort()
             open.reverse()
             next = open.pop()
+            # print('take list item')
+            # print(next)
             x = next[1]
             y = next[2]
             g = next[0]
             expand[x][y] = count
             count += 1
 
+            # check if we are done
+
             if x == goal[0] and y == goal[1]:
                 found = True
             else:
+                # expand winning element and add to new open list
                 for i in range(len(delta)):
                     x2 = x + delta[i][0]
                     y2 = y + delta[i][1]
@@ -69,8 +79,14 @@ def search(grid, init, goal, cost):
                         if closed[x2][y2] == 0 and grid[x2][y2] == 0:
                             g2 = g + cost
                             open.append([g2, x2, y2])
+                            # print('append list item')
+                            # print([g2, x2, y2])
                             closed[x2][y2] = 1
                             action[x2][y2] = i
+                # print('new open list:')
+                # for i in range(len(open)):
+                #     print('    ', open[i])
+                # print('----')
 
     policy = [[' ' for col in range(len(grid[0]))] for row in range(len(grid))]
     x = goal[0]
