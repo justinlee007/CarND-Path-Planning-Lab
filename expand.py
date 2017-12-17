@@ -28,9 +28,6 @@ delta_name = ['^', '<', 'v', '>']
 
 
 def search(grid, init, goal, cost):
-    # ----------------------------------------
-    # modify code below
-    # ----------------------------------------
     closed = [[0 for row in range(len(grid[0]))] for col in range(len(grid))]
     closed[init[0]][init[1]] = 1
     expand = [[-1 for row in range(len(grid[0]))] for col in range(len(grid))]
