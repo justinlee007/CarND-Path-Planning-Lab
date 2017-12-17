@@ -92,10 +92,10 @@ def search(grid, init, goal, cost, heuristic):
                             # print('append list item')
                             # print([g2, x2, y2])
                             closed[x2][y2] = 1
-                # print('new open list:')
-                # for i in range(len(open)):
-                #     print('    ', open[i])
-                # print('----')
+                            # print('new open list:')
+                            # for i in range(len(open)):
+                            #     print('    ', open[i])
+                            # print('----')
 
     return expand
 

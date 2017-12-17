@@ -80,10 +80,10 @@ def search(grid, init, goal, cost):
                             # print([g2, x2, y2])
                             closed[x2][y2] = 1
                             action[x2][y2] = i
-                # print('new open list:')
-                # for i in range(len(open)):
-                #     print('    ', open[i])
-                # print('----')
+                            # print('new open list:')
+                            # for i in range(len(open)):
+                            #     print('    ', open[i])
+                            # print('----')
 
     policy = [[' ' for col in range(len(grid[0]))] for row in range(len(grid))]
     x = goal[0]
